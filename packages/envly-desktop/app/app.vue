@@ -1,13 +1,11 @@
-<template>
-  <div>
-    test desktop app
-  </div>
-</template>
-
 <script setup lang="ts">
-
+useVaultEvents()
 </script>
 
-<style scoped>
-
-</style>
+<template>
+  <UApp>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UApp>
+</template>

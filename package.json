@@ -9,6 +9,17 @@
     "type": "git",
     "url": "https://github.com/eiliv17/envly.git"
   },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "pnpm -r do-dev",
+    "build": "pnpm -r do-build",
+    "lint": "pnpm -r do-lint",
+    "typecheck": "pnpm -r do-typecheck",
+    "dev:desktop": "pnpm --filter envly-desktop tauri dev",
+    "dev:website": "pnpm --filter envly-website do-dev",
+    "build:desktop": "pnpm --filter envly-desktop tauri build",
+    "build:website": "pnpm --filter envly-website do-build"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
