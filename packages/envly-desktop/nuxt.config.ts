@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
 
   devServer: {
-    host: '0.0.0.0',
+    host: process.env.TAURI_DEV_HOST || 'localhost',
     port: 1420,
   },
 
@@ -12,6 +12,11 @@ export default defineNuxtConfig({
     envPrefix: ['VITE_', 'TAURI_'],
     server: {
       strictPort: true,
+      hmr: {
+        protocol: 'ws',
+        host: process.env.TAURI_DEV_HOST || 'localhost',
+        port: 1421,
+      },
     },
   },
 
