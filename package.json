@@ -8,5 +8,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/eiliv17/envly.git"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "better-sqlite3",
+      "esbuild",
+      "sharp",
+      "vue-demi"
+    ]
   }
 }
