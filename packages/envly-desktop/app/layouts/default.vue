@@ -100,9 +100,8 @@ const themeIcon = computed(() => {
   <div class="h-screen flex flex-col overflow-hidden">
     <header class="shrink-0 z-50 border-b border-default bg-default/75 backdrop-blur">
       <div class="max-w-6xl mx-auto flex items-center h-14 px-4 gap-6">
-        <NuxtLink to="/dashboard" class="flex items-center gap-2 shrink-0">
-          <UIcon name="i-ph-shield-check" class="size-5 text-primary" />
-          <span class="font-bold">Envly</span>
+        <NuxtLink to="/dashboard" class="shrink-0">
+          <span class="font-bold text-primary text-lg tracking-tight">Envly</span>
         </NuxtLink>
 
         <UNavigationMenu :items="navItems" class="flex-1" />
