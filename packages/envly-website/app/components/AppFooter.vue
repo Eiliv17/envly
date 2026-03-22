@@ -3,14 +3,12 @@ const { footer } = useAppConfig()
 </script>
 
 <template>
-  <UFooter>
+  <UFooter class="border-none">
     <template #left>
       {{ footer.credits }}
     </template>
 
     <template #right>
-      <UColorModeButton v-if="footer?.colorMode" />
-
       <template v-if="footer?.links">
         <UButton
           v-for="(link, index) of footer?.links"

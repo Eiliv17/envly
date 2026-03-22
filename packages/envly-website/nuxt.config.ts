@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content',
-    'nuxt-og-image',
     'nuxt-llms',
     '@nuxtjs/mcp-toolkit'
   ],
@@ -35,7 +34,8 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: [
-        '/'
+        '/',
+        '/downloads'
       ],
       crawlLinks: true,
       autoSubfolderIndex: false
@@ -56,12 +56,12 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://docs-template.nuxt.dev/',
-    title: 'Nuxt Docs Template',
-    description: 'A template for building documentation with Nuxt UI and Nuxt Content.',
+    domain: 'https://envly.dev/',
+    title: 'Envly',
+    description: 'Envly is a desktop secrets and environment variable manager built with Tauri 2, Rust, and Nuxt 4.',
     full: {
-      title: 'Nuxt Docs Template - Full Documentation',
-      description: 'This is the full documentation for the Nuxt Docs Template.'
+      title: 'Envly - Full Documentation',
+      description: 'Complete documentation for Envly, a desktop secrets and environment variable manager.'
     },
     sections: [
       {
@@ -82,6 +82,6 @@ export default defineNuxtConfig({
   },
 
   mcp: {
-    name: 'Docs template'
+    name: 'Envly'
   }
 })

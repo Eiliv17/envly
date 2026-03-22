@@ -1,0 +1,18 @@
+release_page_url: https://github.com/eiliv17/envly/releases
+items:
+  - name: Apple Silicon (ARM64)
+    os: macos
+    file_extension: dmg
+    link: https://github.com/eiliv17/envly/releases/download/v0.1.0/envly-0.1.0-macos-arm64.dmg
+  - name: Intel (x86_64)
+    os: macos
+    file_extension: dmg
+    link: https://github.com/eiliv17/envly/releases/download/v0.1.0/envly-0.1.0-macos-x86_64.dmg
+  - name: Windows 10/11
+    os: windows
+    file_extension: exe
+    link: https://github.com/eiliv17/envly/releases/download/v0.1.0/envly-0.1.0-windows-x86_64.exe
+  - name: Linux (x86_64)
+    os: linux
+    file_extension: appimage
+    link: https://github.com/eiliv17/envly/releases/download/v0.1.0/envly-0.1.0-linux-x86_64.AppImage

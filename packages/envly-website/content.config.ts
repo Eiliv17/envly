@@ -10,7 +10,7 @@ export default defineContentConfig({
       type: 'page',
       source: {
         include: '**',
-        exclude: ['index.md']
+        exclude: ['index.md', 'downloads.yml']
       },
       schema: z.object({
         links: z.array(z.object({
@@ -19,6 +19,19 @@ export default defineContentConfig({
           to: z.string(),
           target: z.string().optional()
         })).optional()
+      })
+    }),
+    downloads: defineCollection({
+      type: 'data',
+      source: 'downloads.yml',
+      schema: z.object({
+        release_page_url: z.string().url(),
+        items: z.array(z.object({
+          name: z.string().nonempty(),
+          os: z.enum(['macos', 'windows', 'linux']),
+          file_extension: z.enum(['dmg', 'exe', 'deb', 'rpm', 'tar.gz', 'zip', 'appimage']),
+          link: z.string().url()
+        }))
       })
     })
   }
