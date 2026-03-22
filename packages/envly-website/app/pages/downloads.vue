@@ -16,6 +16,10 @@ const osConfig: Record<string, { label: string, icon: string }> = {
   linux: { label: 'Linux', icon: 'i-simple-icons-linux' }
 }
 
+function downloadUrl(filename: string): string {
+  return `${releasePageUrl.value}/latest/download/${filename}`
+}
+
 const platforms = computed(() => {
   if (!data.value?.items) return []
 
@@ -42,7 +46,14 @@ const platforms = computed(() => {
           Downloads
         </h1>
         <p class="mt-4 text-lg text-muted">
-          Envly v0.1.0
+          Download the latest release, or browse
+          <ULink
+            :to="releasePageUrl"
+            target="_blank"
+            class="text-primary hover:underline"
+          >
+            all releases on GitHub
+          </ULink>
         </p>
       </div>
 
@@ -65,7 +76,7 @@ const platforms = computed(() => {
             <ULink
               v-for="item in platform.items"
               :key="item.name"
-              :to="item.link"
+              :to="downloadUrl(item.filename)"
               target="_blank"
               class="block rounded-xl border border-default bg-elevated p-5 transition-colors hover:bg-elevated/80"
             >

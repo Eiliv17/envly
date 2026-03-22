@@ -1,0 +1,110 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install git-cliff
+        run: pip install git-cliff
+
+      - name: Generate release notes
+        run: git cliff --latest --config cliff.toml -o CHANGES.md
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "${{ github.ref_name }}" --notes-file CHANGES.md
+
+  build:
+    needs: create-release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+            asset_name: envly-macos-arm64.dmg
+            bundle_type: dmg
+          - platform: macos-latest
+            target: x86_64-apple-darwin
+            asset_name: envly-macos-x86_64.dmg
+            bundle_type: dmg
+          - platform: ubuntu-22.04
+            target: ''
+            asset_name: envly-linux-x86_64.AppImage
+            bundle_type: appimage
+          - platform: windows-latest
+            target: ''
+            asset_name: envly-windows-x86_64.exe
+            bundle_type: nsis
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Linux system dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: packages/envly-desktop/src-tauri -> target
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Build Tauri app
+        shell: bash
+        working-directory: packages/envly-desktop
+        run: |
+          if [ -n "${{ matrix.target }}" ]; then
+            pnpm tauri build --target ${{ matrix.target }}
+          else
+            pnpm tauri build
+          fi
+
+      - name: Find and rename artifact
+        shell: bash
+        run: |
+          ARTIFACT=$(find packages/envly-desktop/src-tauri/target -type f \
+            -path "*/release/bundle/${{ matrix.bundle_type }}/*" \
+            \( -name "*.dmg" -o -name "*.AppImage" -o -name "*.exe" \) \
+            | head -1)
+          echo "Found artifact: $ARTIFACT"
+          cp "$ARTIFACT" "${{ matrix.asset_name }}"
+
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ github.ref_name }}" "${{ matrix.asset_name }}" --clobber

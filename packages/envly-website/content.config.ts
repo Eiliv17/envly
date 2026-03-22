@@ -30,7 +30,7 @@ export default defineContentConfig({
           name: z.string().nonempty(),
           os: z.enum(['macos', 'windows', 'linux']),
           file_extension: z.enum(['dmg', 'exe', 'deb', 'rpm', 'tar.gz', 'zip', 'appimage']),
-          link: z.string().url()
+          filename: z.string().nonempty()
         }))
       })
     })
