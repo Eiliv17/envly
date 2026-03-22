@@ -72,10 +72,17 @@ export default defineNuxtConfig({
         ]
       },
       {
-        title: 'Essentials',
+        title: 'Features',
         contentCollection: 'docs',
         contentFilters: [
-          { field: 'path', operator: 'LIKE', value: '/essentials%' }
+          { field: 'path', operator: 'LIKE', value: '/features%' }
+        ]
+      },
+      {
+        title: 'Security',
+        contentCollection: 'docs',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/security%' }
         ]
       }
     ]
