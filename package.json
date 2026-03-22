@@ -11,6 +11,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm -r do-postinstall",
     "dev": "pnpm -r do-dev",
     "build": "pnpm -r do-build",
     "lint": "pnpm -r do-lint",
@@ -28,6 +29,6 @@
       "sharp",
       "vue-demi"
     ],
-    "ignoredBuiltDependencies": [ "@parcel/watcher", "@tailwindcss/oxide", "esbuild", "unrs-resolver", "vue-demi" ]
+    "ignoredBuiltDependencies": [ "@tailwindcss/oxide", "unrs-resolver" ]
   }
 }

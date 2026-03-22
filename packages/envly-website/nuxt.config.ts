@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     asyncContext: true
   },
 
-  compatibilityDate: '2024-07-11',
+  compatibilityDate: '2025-05-15',
 
   nitro: {
     prerender: {
@@ -56,7 +56,7 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://envly.dev/',
+    domain: 'https://envly.dev',
     title: 'Envly',
     description: 'Envly is a desktop secrets and environment variable manager built with Tauri 2, Rust, and Nuxt 4.',
     full: {

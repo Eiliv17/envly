@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
   css: ['~/assets/css/main.css'],
 
   i18n: {

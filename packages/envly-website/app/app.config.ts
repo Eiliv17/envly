@@ -1,4 +1,5 @@
 export default defineAppConfig({
+  url: 'https://envly.dev',
   ui: {
     colors: {
       primary: 'purple',

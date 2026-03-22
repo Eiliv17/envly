@@ -31,9 +31,9 @@ const exportDestination = ref('')
 const exportErrors = reactive({ passphrase: '', confirmPassphrase: '' })
 
 const deleteModalOpen = ref(false)
-const deleteConfirmPassphrase = ref('')
+const deleteConfirmName = ref('')
 const deleting = ref(false)
-const deleteErrors = reactive({ passphrase: '' })
+const deleteErrors = reactive({ name: '' })
 
 const cipherKind = ref<'passphrase' | 'symmetric' | null>(null)
 const migrateModalOpen = ref(false)
@@ -51,7 +51,7 @@ watch(newPassphrase, () => { passphraseErrors.newPassphrase = '' })
 watch(confirmPassphrase, () => { passphraseErrors.confirmPassphrase = '' })
 watch(exportPassphrase, () => { exportErrors.passphrase = '' })
 watch(exportConfirmPassphrase, () => { exportErrors.confirmPassphrase = '' })
-watch(deleteConfirmPassphrase, () => { deleteErrors.passphrase = '' })
+watch(deleteConfirmName, () => { deleteErrors.name = '' })
 watch(migratePassphrase, () => { migrateErrors.passphrase = '' })
 watch(migrateConfirmPassphrase, () => { migrateErrors.confirmPassphrase = '' })
 
@@ -67,8 +67,8 @@ onMounted(async () => {
     if (vaultStore.activeVaultId) {
       cipherKind.value = await vaultStore.getActiveVaultCipherKind()
     }
-  } catch {
-    // ignored
+  } catch (e) {
+    toast.add({ title: t('common.error'), description: String(e), color: 'error' })
   }
 })
 
@@ -207,9 +207,13 @@ async function handleExport() {
 }
 
 async function handleDelete() {
-  deleteErrors.passphrase = ''
-  if (!deleteConfirmPassphrase.value) {
-    deleteErrors.passphrase = t('settings.confirmPassphraseRequired')
+  deleteErrors.name = ''
+  if (!deleteConfirmName.value) {
+    deleteErrors.name = t('settings.confirmVaultNameRequired')
+    return
+  }
+  if (deleteConfirmName.value !== vaultName.value) {
+    deleteErrors.name = t('settings.confirmVaultNameMismatch')
     return
   }
   if (!vaultStore.activeVaultId) return
@@ -399,7 +403,7 @@ async function handleDelete() {
           :label="$t('settings.deleteVault')"
           color="error"
           variant="outline"
-          @click="deleteConfirmPassphrase = ''; deleteModalOpen = true"
+          @click="deleteConfirmName = ''; deleteModalOpen = true"
         />
       </div>
     </UCard>
@@ -415,8 +419,8 @@ async function handleDelete() {
             <p class="text-sm text-muted">
               {{ $t('settings.deleteConfirmText', { name: vaultName }) }}
             </p>
-            <UFormField :label="$t('settings.currentPassphrase')" :error="deleteErrors.passphrase || undefined">
-              <UInput v-model="deleteConfirmPassphrase" type="password" :placeholder="$t('settings.currentPassphrasePlaceholder')" class="w-full" />
+            <UFormField :label="$t('settings.confirmVaultName')" :error="deleteErrors.name || undefined">
+              <UInput v-model="deleteConfirmName" :placeholder="$t('settings.confirmVaultNamePlaceholder')" class="w-full" />
             </UFormField>
             <div class="flex justify-end gap-2 pt-2">
               <UButton :label="$t('common.cancel')" color="neutral" variant="outline" @click="deleteModalOpen = false" />
