@@ -26,9 +26,9 @@ export default defineAppConfig({
     title: '',
     to: '/',
     logo: {
-      alt: '',
-      light: '',
-      dark: ''
+      alt: 'Envly',
+      light: '/logo.png',
+      dark: '/logo.png'
     },
     search: true,
     colorMode: true,
