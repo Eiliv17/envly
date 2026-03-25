@@ -91,6 +91,32 @@ const platforms = computed(() => {
         </div>
       </div>
 
+      <div class="mt-10 rounded-xl border border-amber-500/30 bg-amber-500/5 p-5">
+        <div class="flex items-start gap-3">
+          <UIcon
+            name="i-lucide-triangle-alert"
+            class="size-5 text-amber-500 shrink-0 mt-0.5"
+          />
+          <div>
+            <p class="font-medium text-sm">
+              macOS users
+            </p>
+            <p class="mt-1 text-sm text-muted">
+              Envly is not yet code-signed. macOS may show "app is damaged" when you first open it. To fix this, run
+              <code class="px-1 py-0.5 rounded bg-default text-xs font-mono">xattr -cr /Applications/envly-desktop.app</code>
+              in Terminal, then reopen the app. See the
+              <ULink
+                to="/getting-started/installation"
+                class="text-primary hover:underline"
+              >
+                installation guide
+              </ULink>
+              for details.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <p class="mt-12 text-center text-sm text-muted">
         Looking for older versions? Check the
         <ULink
